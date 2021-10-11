@@ -1,4 +1,5 @@
 FROM ubuntu:18.04
+FROM python:3.6-slim-bullseye
 
 RUN apt-get update -y && apt-get install vim -y && apt-get install wget -y && apt-get install ssh -y && apt-get install openjdk-8-jdk -y && apt-get install sudo -y
 RUN useradd -m hduser && echo "hduser:supergroup" | chpasswd && adduser hduser sudo && echo "hduser     ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && cd /usr/bin/ && sudo ln -s python3 python
@@ -10,6 +11,9 @@ WORKDIR /home/hduser
 USER hduser
 RUN wget -q https://downloads.apache.org/hadoop/common/hadoop-3.3.0/hadoop-3.3.0.tar.gz && tar zxvf hadoop-3.3.0.tar.gz && rm hadoop-3.3.0.tar.gz
 RUN ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa && cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys && chmod 0600 ~/.ssh/authorized_keys
+
+COPY requirements.txt .
+RUN pip install -r requirements.txt
 
 ENV HDFS_NAMENODE_USER hduser
 ENV HDFS_DATANODE_USER hduser
