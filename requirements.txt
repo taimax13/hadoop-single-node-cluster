@@ -1,1 +1,2 @@
+virtualenv~=20.8.1
 pyarrow~=5.0.0

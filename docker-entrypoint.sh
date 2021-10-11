@@ -11,4 +11,7 @@ $HADOOP_HOME/sbin/start-yarn.sh
 
 #create venv
 
+python3 -m virtualenv venv
+
+
 bash

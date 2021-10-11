@@ -1,9 +1,15 @@
 FROM ubuntu:18.04
-FROM python:3.6-slim-bullseye
 
 RUN apt-get update -y && apt-get install vim -y && apt-get install wget -y && apt-get install ssh -y && apt-get install openjdk-8-jdk -y && apt-get install sudo -y
-RUN useradd -m hduser && echo "hduser:supergroup" | chpasswd && adduser hduser sudo && echo "hduser     ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && cd /usr/bin/ && sudo ln -s python3 python
 
+RUN apt-get install -y build-essential python3 python3-dev python3-pip python3-venv
+RUN apt-get install -y git
+
+# update pip
+RUN python3 -m pip install pip --upgrade
+RUN python3 -m pip install wheel
+
+RUN useradd -m hduser && echo "hduser:supergroup" | chpasswd && adduser hduser sudo && echo "hduser     ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && cd /usr/bin/ && sudo ln -s python3 python
 COPY ssh_config /etc/ssh/ssh_config
 
 WORKDIR /home/hduser
@@ -13,7 +19,7 @@ RUN wget -q https://downloads.apache.org/hadoop/common/hadoop-3.3.0/hadoop-3.3.0
 RUN ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa && cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys && chmod 0600 ~/.ssh/authorized_keys
 
 COPY requirements.txt .
-RUN pip install -r requirements.txt
+COPY activate_vn.sh .
 
 ENV HDFS_NAMENODE_USER hduser
 ENV HDFS_DATANODE_USER hduser
