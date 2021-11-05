@@ -7,7 +7,10 @@ RUN apt-get install -y git
 
 # update pip
 RUN python3 -m pip install pip --upgrade
-RUN python3 -m pip install wheel
+RUN python3 -m pip install wheel pyarrow pandas fsspec
+
+COPY requirements.txt .
+COPY activate_vn.sh .
 
 RUN useradd -m hduser && echo "hduser:supergroup" | chpasswd && adduser hduser sudo && echo "hduser     ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && cd /usr/bin/ && sudo ln -s python3 python
 COPY ssh_config /etc/ssh/ssh_config
@@ -18,8 +21,7 @@ USER hduser
 RUN wget -q https://downloads.apache.org/hadoop/common/hadoop-3.3.0/hadoop-3.3.0.tar.gz && tar zxvf hadoop-3.3.0.tar.gz && rm hadoop-3.3.0.tar.gz
 RUN ssh-keygen -t rsa -P '' -f ~/.ssh/id_rsa && cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys && chmod 0600 ~/.ssh/authorized_keys
 
-COPY requirements.txt .
-COPY activate_vn.sh .
+
 
 ENV HDFS_NAMENODE_USER hduser
 ENV HDFS_DATANODE_USER hduser

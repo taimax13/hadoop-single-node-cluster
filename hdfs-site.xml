@@ -21,10 +21,22 @@
         <name>dfs.replication</name>
         <value>1</value>
     </property>
-
     <property>
         <name>dfs.permissions</name>
         <value>false</value>
+    </property>
+     <property>
+        <name>dfs.client.use.datanode.hostname</name>
+        <value>true</value>
+        <description>Whether clients should use datanode hostnames when connecting to datanodes.</description>
+    </property>
+    <property>
+      <name>dfs.namenode.rpc-address</name>
+      <value>172.17.0.2:9000</value>
+    </property>
+    <property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://172.17.0.2:9000</value>
     </property>
 </configuration>
 
