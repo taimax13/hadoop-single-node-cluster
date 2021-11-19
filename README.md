@@ -96,7 +96,8 @@ there some libraries added for file processing using python script like:
     weel, pyarrow, pandas, fsspec, feedparser
 ```
 to make container node accessible from outside please add the following params into hdfs-site.xml  
- ``` 
+
+```
  <property>
       <name>dfs.namenode.rpc-address</name>
       <value><docker ip>:9000</value>
@@ -107,3 +108,6 @@ to make container node accessible from outside please add the following params i
     </property>
     
     ```
+=======
+    </property>
+>>>>>>> 5972332d21aca4fbef4d696353720fe72fa8dcd0
