@@ -7,7 +7,7 @@ RUN apt-get install -y git
 
 # update pip
 RUN python3 -m pip install pip --upgrade
-RUN python3 -m pip install wheel pyarrow pandas fsspec
+RUN python3 -m pip install wheel pyarrow pandas fsspec feedparser
 
 COPY requirements.txt .
 COPY activate_vn.sh .
