@@ -91,4 +91,19 @@ To re-start the container, and go back to our Hadoop environment execute:
 
      $ docker start -i <container-name>
 
-
+there some libraries added for file processing using python script like:
+```buildoutcfg
+    weel, pyarrow, pandas, fsspec, feedparser
+```
+to make container node accessible from outside please add the following params into hdfs-site.xml  
+ ``` 
+ <property>
+      <name>dfs.namenode.rpc-address</name>
+      <value><docker ip>:9000</value>
+    </property>
+    <property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://<docker ip>:9000</value>
+    </property>
+    
+    ```
